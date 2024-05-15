@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -36,7 +36,26 @@ public class User implements UserDetails {
 
     private boolean enabled;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Recipe> recipes;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserLikes> likes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserSaves> saves;
+
+    @ManyToMany
+    @JoinTable(name = "followers",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "follower_id"))
+    private List<User> followers;
+
+    @ManyToMany
+    @JoinTable(name = "followings",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "following_id"))
+    private List<User> followings;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

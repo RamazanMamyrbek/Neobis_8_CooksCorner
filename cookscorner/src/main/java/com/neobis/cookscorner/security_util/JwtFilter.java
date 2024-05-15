@@ -2,7 +2,6 @@ package com.neobis.cookscorner.security_util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neobis.cookscorner.dtos.ApiErrorResponse;
-import com.neobis.cookscorner.exceptions.JwtVerificationException;
 import com.neobis.cookscorner.services.ApiUserDetailsService;
 import com.neobis.cookscorner.services.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -14,36 +13,34 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final ApiUserDetailsService userDetailsService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
         try {
-            if(authHeader != null && authHeader.startsWith("Bearer ")) {
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 String jwtToken = authHeader.substring(7);
                 String username = jwtService.extractUsername(jwtToken);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                if(SecurityContextHolder.getContext().getAuthentication() == null) {
+                if (SecurityContextHolder.getContext().getAuthentication() == null) {
                     SecurityContextHolder.getContext().setAuthentication(
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())
                     );
                 }
             }
-        }catch (UsernameNotFoundException ex){
+        } catch (UsernameNotFoundException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             ObjectMapper objectMapper = new ObjectMapper();
             response.setContentType("application/json");
@@ -53,7 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     .timestamp(System.currentTimeMillis())
                     .build()));
             return;
-        }catch (ExpiredJwtException ex) {
+        } catch (ExpiredJwtException ex) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             ObjectMapper objectMapper = new ObjectMapper();
             response.setContentType("application/json");

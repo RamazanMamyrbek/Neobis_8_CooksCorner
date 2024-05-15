@@ -23,4 +23,5 @@ public class UsersController {
     public ResponseEntity<?> testSecurity(Authentication authentication) {
         return ResponseEntity.ok(Map.of("details", authentication));
     }
+
 }
