@@ -21,4 +21,14 @@ public class Ingredient {
     @ManyToOne
     @JoinColumn(name = "recipe_id", referencedColumnName = "id")
     private Recipe recipe;
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", quantity='" + quantity + '\'' +
+                ", recipeId=" + recipe.getId() +
+                '}';
+    }
 }

@@ -1,6 +1,7 @@
 package com.neobis.cookscorner.controllers;
 
 import com.neobis.cookscorner.dtos.RecipeCreateDto;
+import com.neobis.cookscorner.dtos.RecipeResponseDto;
 import com.neobis.cookscorner.entities.Recipe;
 import com.neobis.cookscorner.services.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +26,8 @@ public class RecipeController {
     @Operation(summary = "Find recipes by category", description = "Returns all recipes by category. Parameter category is required")
     @SecurityRequirement(name = "JWT")
     public ResponseEntity<?> findAllRecipesByCategory(@RequestParam(name = "category", required = true) String category) {
-        List<Recipe> recipes = recipeService.findAllByCategory(category);
+        List<RecipeResponseDto> recipes = recipeService.findAllByCategory(category);
+
         return ResponseEntity.ok(recipes);
     }
 
@@ -33,15 +35,15 @@ public class RecipeController {
     @Operation(summary = "Find recipe by id", description = "Returns a recipe by id.")
     @SecurityRequirement(name = "JWT")
     public ResponseEntity<?> findRecipeById(@PathVariable("recipeId") Long recipeId) {
-        Recipe recipe = recipeService.findById(recipeId);
-        return ResponseEntity.ok(recipe);
+        RecipeResponseDto recipeResponseDto = recipeService.findById(recipeId);
+        return ResponseEntity.ok(recipeResponseDto);
     }
 
     @GetMapping("/search")
     @Operation(summary = "Search recipes by title", description = "Returns search results by title. Parameter title is required")
     @SecurityRequirement(name = "JWT")
     public ResponseEntity<?> findRecipeByTitle(@RequestParam(name = "title", required = true) String title) {
-        List<Recipe> recipes = recipeService.findAllByTitleStartsWith(title);
+        List<RecipeResponseDto> recipes = recipeService.findAllByTitleStartsWith(title);
         return ResponseEntity.ok(recipes);
     }
 

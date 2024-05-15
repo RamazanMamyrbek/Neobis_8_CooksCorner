@@ -24,6 +24,7 @@ public class Recipe {
 
     private String title;
 
+
     private String description;
 
     private String photo;
@@ -52,4 +53,21 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe")
     private List<UserLikes> likes;
+
+    @Override
+    public String toString() {
+        return "Recipe{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", photo='" + photo + '\'' +
+                ", ingredients=" + ingredients +
+                ", difficulty=" + difficulty +
+                ", category=" + category +
+                ", preparationTime='" + preparationTime + '\'' +
+                ", youtubeLink='" + youtubeLink + '\'' +
+                ", userId=" + user.getId() +
+                ", likes=" + likes +
+                '}';
+    }
 }

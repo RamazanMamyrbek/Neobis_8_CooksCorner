@@ -24,4 +24,13 @@ public class UserLikes {
     @ManyToOne
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", nullable = false)
     private Recipe recipe;
+
+    @Override
+    public String toString() {
+        return "UserLikes{" +
+                "id=" + id +
+                ", userId=" + user.getId() +
+                ", recipeId=" + recipe.getId() +
+                '}';
+    }
 }

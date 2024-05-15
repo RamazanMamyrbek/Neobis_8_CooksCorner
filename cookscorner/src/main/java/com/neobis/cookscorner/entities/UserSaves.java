@@ -24,4 +24,13 @@ public class UserSaves {
     @ManyToOne
     @JoinColumn(name = "recipe_id", referencedColumnName = "id", nullable = false)
     private Recipe recipe;
+
+    @Override
+    public String toString() {
+        return "UserSaves{" +
+                "id=" + id +
+                ", userId=" + user.getId() +
+                ", recipeId=" + recipe.getId() +
+                '}';
+    }
 }

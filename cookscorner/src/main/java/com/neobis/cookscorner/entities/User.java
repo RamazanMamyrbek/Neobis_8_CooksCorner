@@ -37,7 +37,7 @@ public class User implements UserDetails {
 
     private boolean enabled;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Recipe> recipes;
 
@@ -62,6 +62,20 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "following_id"))
     @JsonIgnore
     private List<User> followings;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", photo='" + photo + '\'' +
+                ", enabled=" + enabled +
+                ", recipes=" + recipes +
+                ", saves=" + saves +
+                '}';
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
