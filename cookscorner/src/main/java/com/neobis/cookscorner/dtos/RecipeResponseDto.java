@@ -25,4 +25,5 @@ public class RecipeResponseDto {
     private String youtubeLink;
     private Long userId;
     private Integer likesCount;
+    private Integer savesCount;
 }

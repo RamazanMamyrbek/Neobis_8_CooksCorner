@@ -54,4 +54,35 @@ public class RecipeController {
         recipeService.saveRecipe(recipeCreateDto, principal.getName());
         return ResponseEntity.ok(Map.of("message", "Recipe is created successfully."));
     }
+    @GetMapping("/likes/add/{recipeId}")
+    @Operation(summary = "Like recipe", description = "Endpoint to like the recipe. Requires recipe id")
+    @SecurityRequirement(name = "JWT")
+    public ResponseEntity<?> likeRecipe(@PathVariable("recipeId") Long recipeId, Principal principal) {
+        recipeService.likeRecipe(recipeId, principal.getName());
+        return ResponseEntity.ok(Map.of("message", "Recipe successfully liked"));
+    }
+
+    @GetMapping("/likes/remove/{recipeId}")
+    @Operation(summary = "Unlike recipe", description = "Endpoint to Unlike the recipe. Requires recipe id")
+    @SecurityRequirement(name = "JWT")
+    public ResponseEntity<?> unlikeRecipe(@PathVariable("recipeId") Long recipeId, Principal principal) {
+        recipeService.unlikeRecipe(recipeId, principal.getName());
+        return ResponseEntity.ok(Map.of("message", "Recipe successfully unliked"));
+    }
+
+    @GetMapping("/saved/add/{recipeId}")
+    @Operation(summary = "Add recipe to saved", description = "Endpoint to save the recipe for user. Requires recipe id")
+    @SecurityRequirement(name = "JWT")
+    public ResponseEntity<?> addRecipeToSaves(@PathVariable("recipeId") Long recipeId, Principal principal) {
+        recipeService.addRecipeToSaves(recipeId, principal.getName());
+        return ResponseEntity.ok(Map.of("message", "Recipe successfully added to saved"));
+    }
+
+    @GetMapping("/saved/remove/{recipeId}")
+    @Operation(summary = "Remove recipe from saves", description = "Endpoint to remove the recipe from user's saved. Requires recipe id")
+    @SecurityRequirement(name = "JWT")
+    public ResponseEntity<?> removeRecipeFromSaves(@PathVariable("recipeId") Long recipeId, Principal principal) {
+        recipeService.removeRecipeFromSaves(recipeId, principal.getName());
+        return ResponseEntity.ok(Map.of("message", "Recipe successfully removed from saved"));
+    }
 }

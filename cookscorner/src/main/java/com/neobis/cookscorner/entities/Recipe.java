@@ -54,6 +54,9 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe")
     private List<UserLikes> likes;
 
+    @OneToMany(mappedBy = "recipe")
+    private List<UserSaves> saves;
+
     @Override
     public String toString() {
         return "Recipe{" +

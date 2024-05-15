@@ -13,4 +13,12 @@ public interface RecipeService {
     List<RecipeResponseDto> findAllByTitleStartsWith(String title);
 
     void saveRecipe(RecipeCreateDto recipeCreateDto, String email);
+
+    void likeRecipe(Long recipeId, String name);
+
+    void unlikeRecipe(Long recipeId, String name);
+
+    void addRecipeToSaves(Long recipeId, String name);
+
+    void removeRecipeFromSaves(Long recipeId, String name);
 }
