@@ -17,11 +17,4 @@ import java.util.Map;
 public class UsersController {
 
 
-    @GetMapping("/testAuth")
-    @Operation(summary = "Test security")
-    @SecurityRequirement(name = "JWT")
-    public ResponseEntity<?> testSecurity(Authentication authentication) {
-        return ResponseEntity.ok(Map.of("details", authentication));
-    }
-
 }

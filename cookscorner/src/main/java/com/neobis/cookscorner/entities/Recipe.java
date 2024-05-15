@@ -1,11 +1,13 @@
 package com.neobis.cookscorner.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.print.attribute.standard.MediaSize;
 import java.util.List;
 
 @Entity
@@ -19,25 +21,33 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
 
-    @Column(nullable = false)
+    private String title;
+
     private String description;
 
+    private String photo;
+
     @OneToMany(mappedBy = "recipe")
+    @JsonIgnore
     private List<Ingredient> ingredients;
 
-    @Column(nullable = false)
+
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
-    @Column(nullable = false)
+
     @Enumerated(EnumType.STRING)
     private Category category;
 
+    @Column(name = "preparation_time")
+    private String preparationTime;
+
+    @Column(name = "youtube_link")
+    private String youtubeLink;
+
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @OneToMany(mappedBy = "recipe")

@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class UserLoginDto {
-    @Schema(example = "user@mail.com")
-    private String email;
-    @Schema(example = "Password1234.")
-    private String password;
+public class IngredientDto {
+    @Schema(example = "Chicken")
+    private String name;
+    @Schema(example = "1 kg")
+    private String quantity;
 }
