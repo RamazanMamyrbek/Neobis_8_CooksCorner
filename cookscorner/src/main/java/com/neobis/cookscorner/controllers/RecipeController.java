@@ -1,8 +1,7 @@
 package com.neobis.cookscorner.controllers;
 
-import com.neobis.cookscorner.dtos.RecipeCreateDto;
-import com.neobis.cookscorner.dtos.RecipeResponseDto;
-import com.neobis.cookscorner.entities.Recipe;
+import com.neobis.cookscorner.dtos.recipe.RecipeCreateDto;
+import com.neobis.cookscorner.dtos.recipe.RecipeResponseDto;
 import com.neobis.cookscorner.services.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

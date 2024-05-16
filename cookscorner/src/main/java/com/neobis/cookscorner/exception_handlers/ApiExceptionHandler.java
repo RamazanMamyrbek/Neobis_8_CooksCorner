@@ -1,6 +1,6 @@
 package com.neobis.cookscorner.exception_handlers;
 
-import com.neobis.cookscorner.dtos.ApiErrorResponse;
+import com.neobis.cookscorner.dtos.other.ApiErrorResponse;
 import com.neobis.cookscorner.exceptions.ApiCommonException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

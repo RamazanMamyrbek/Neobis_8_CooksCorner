@@ -1,7 +1,7 @@
 package com.neobis.cookscorner.services;
 
-import com.neobis.cookscorner.dtos.RecipeCreateDto;
-import com.neobis.cookscorner.dtos.RecipeResponseDto;
+import com.neobis.cookscorner.dtos.recipe.RecipeCreateDto;
+import com.neobis.cookscorner.dtos.recipe.RecipeResponseDto;
 
 import java.util.List;
 

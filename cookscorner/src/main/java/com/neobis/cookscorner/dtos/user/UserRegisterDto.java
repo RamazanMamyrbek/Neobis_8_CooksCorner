@@ -1,4 +1,4 @@
-package com.neobis.cookscorner.dtos;
+package com.neobis.cookscorner.dtos.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -17,4 +17,6 @@ public class UserRegisterDto {
     private String email;
     @Schema(example = "Password1234.")
     private String password;
+    @Schema(example = "Password1234.")
+    private String confirmPassword;
 }

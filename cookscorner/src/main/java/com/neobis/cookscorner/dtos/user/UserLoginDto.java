@@ -1,4 +1,4 @@
-package com.neobis.cookscorner.dtos;
+package com.neobis.cookscorner.dtos.user;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

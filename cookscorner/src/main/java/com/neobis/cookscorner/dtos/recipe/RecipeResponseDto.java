@@ -1,7 +1,7 @@
-package com.neobis.cookscorner.dtos;
+package com.neobis.cookscorner.dtos.recipe;
 
+import com.neobis.cookscorner.dtos.recipe.IngredientResponseDto;
 import com.neobis.cookscorner.entities.*;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

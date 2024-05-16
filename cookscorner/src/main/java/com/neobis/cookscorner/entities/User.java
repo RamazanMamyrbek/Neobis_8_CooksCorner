@@ -27,6 +27,8 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String name;
 
+    private String description;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -52,14 +54,14 @@ public class User implements UserDetails {
     @ManyToMany
     @JoinTable(name = "followers",
         joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "follower_id"))
+        inverseJoinColumns = @JoinColumn(name = "follower_id"), uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "follower_id"})})
     @JsonIgnore
     private List<User> followers;
 
     @ManyToMany
     @JoinTable(name = "followings",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "following_id"))
+            inverseJoinColumns = @JoinColumn(name = "following_id"), uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "following_id"})})
     @JsonIgnore
     private List<User> followings;
 

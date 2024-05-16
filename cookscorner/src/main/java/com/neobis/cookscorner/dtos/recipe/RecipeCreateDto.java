@@ -1,12 +1,9 @@
-package com.neobis.cookscorner.dtos;
+package com.neobis.cookscorner.dtos.recipe;
 
+import com.neobis.cookscorner.dtos.recipe.IngredientDto;
 import com.neobis.cookscorner.entities.Category;
 import com.neobis.cookscorner.entities.Difficulty;
-import com.neobis.cookscorner.entities.Ingredient;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

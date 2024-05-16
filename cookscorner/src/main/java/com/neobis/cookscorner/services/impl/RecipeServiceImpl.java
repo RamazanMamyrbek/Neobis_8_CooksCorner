@@ -1,7 +1,7 @@
 package com.neobis.cookscorner.services.impl;
 
-import com.neobis.cookscorner.dtos.RecipeCreateDto;
-import com.neobis.cookscorner.dtos.RecipeResponseDto;
+import com.neobis.cookscorner.dtos.recipe.RecipeCreateDto;
+import com.neobis.cookscorner.dtos.recipe.RecipeResponseDto;
 import com.neobis.cookscorner.entities.*;
 import com.neobis.cookscorner.exceptions.ApiCommonException;
 import com.neobis.cookscorner.repositories.IngredientRepository;

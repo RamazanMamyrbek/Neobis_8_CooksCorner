@@ -1,12 +1,6 @@
 package com.neobis.cookscorner.dtos.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.neobis.cookscorner.dtos.RecipeResponseDto;
-import com.neobis.cookscorner.entities.Recipe;
-import com.neobis.cookscorner.entities.User;
-import com.neobis.cookscorner.entities.UserLikes;
-import com.neobis.cookscorner.entities.UserSaves;
-import jakarta.persistence.*;
+import com.neobis.cookscorner.dtos.recipe.RecipeResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +17,7 @@ public class UserResponseDto {
     private String name;
     private String email;
     private String photo;
+    private String description;
     private List<RecipeResponseDto> recipes;
     private Integer likesCount;
     private List<RecipeResponseDto> saves;

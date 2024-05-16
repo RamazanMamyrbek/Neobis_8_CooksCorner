@@ -1,7 +1,7 @@
 package com.neobis.cookscorner.services.impl;
 
-import com.neobis.cookscorner.dtos.UserLoginDto;
-import com.neobis.cookscorner.dtos.UserRegisterDto;
+import com.neobis.cookscorner.dtos.user.UserLoginDto;
+import com.neobis.cookscorner.dtos.user.UserRegisterDto;
 import com.neobis.cookscorner.entities.User;
 import com.neobis.cookscorner.exceptions.ApiCommonException;
 import com.neobis.cookscorner.services.AuthService;
@@ -10,21 +10,24 @@ import com.neobis.cookscorner.services.UserService;
 import com.neobis.cookscorner.validators.UserValidator;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final UserService userService;
@@ -35,8 +38,11 @@ public class AuthServiceImpl implements AuthService {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
     public String registerUser(UserRegisterDto userRegisterDto, BindingResult bindingResult) {
+        if(!userRegisterDto.getPassword().equals(userRegisterDto.getConfirmPassword()))
+            throw new ApiCommonException("Passwords doesn't match");
         User user = modelMapper.map(userRegisterDto, User.class);
         userValidator.validate(user, bindingResult);
         if(bindingResult.hasErrors()) {
@@ -65,7 +71,7 @@ public class AuthServiceImpl implements AuthService {
             jwtToken = jwtService.generateToken(userDetails);
 
         } catch (BadCredentialsException ex) {
-            throw new ApiCommonException("Invalid username or password");
+            throw new ApiCommonException("Invalid email or password");
         }
 
         return jwtToken;

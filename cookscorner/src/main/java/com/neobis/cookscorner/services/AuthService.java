@@ -1,7 +1,7 @@
 package com.neobis.cookscorner.services;
 
-import com.neobis.cookscorner.dtos.UserLoginDto;
-import com.neobis.cookscorner.dtos.UserRegisterDto;
+import com.neobis.cookscorner.dtos.user.UserLoginDto;
+import com.neobis.cookscorner.dtos.user.UserRegisterDto;
 import org.springframework.validation.BindingResult;
 
 public interface AuthService {

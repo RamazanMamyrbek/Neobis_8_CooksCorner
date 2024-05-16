@@ -1,7 +1,7 @@
 package com.neobis.cookscorner.security_util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.neobis.cookscorner.dtos.ApiErrorResponse;
+import com.neobis.cookscorner.dtos.other.ApiErrorResponse;
 import com.neobis.cookscorner.services.ApiUserDetailsService;
 import com.neobis.cookscorner.services.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;

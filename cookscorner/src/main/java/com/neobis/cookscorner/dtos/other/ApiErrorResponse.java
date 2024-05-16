@@ -1,4 +1,4 @@
-package com.neobis.cookscorner.dtos;
+package com.neobis.cookscorner.dtos.other;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
