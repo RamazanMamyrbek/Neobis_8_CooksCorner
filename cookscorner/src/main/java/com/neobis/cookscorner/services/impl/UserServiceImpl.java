@@ -68,6 +68,27 @@ public class UserServiceImpl implements UserService {
         return userResponseDto;
     }
 
+    @Override
+    public List<UserResponseDto> findAllByNameStartsWith(String name) {
+        List<UserResponseDto> userResponseDtos = new ArrayList<>();
+        List<User> users = userRepository.findAllByNameStartsWithIgnoreCase(name);
+        fillUserResponseDtos(userResponseDtos, users);
+        return userResponseDtos;
+    }
+
+    private void fillUserResponseDtos(List<UserResponseDto> userResponseDtos, List<User> users) {
+        for(User user: users) {
+            UserResponseDto userResponseDto = modelMapper.map(user, UserResponseDto.class);
+            userResponseDto.setRecipes(createRecipeResponseDtoListFromRecipes(user.getRecipes()));
+            userResponseDto.setSaves(createRecipeResponseDtoListFromUserSaves(user.getSaves()));
+            userResponseDto.setLikesCount(user.getLikes().size());
+            userResponseDto.setFollowersCount(user.getFollowers().size());
+            userResponseDto.setFollowingsCount(user.getFollowings().size());
+            userResponseDto.setSaves(null);
+            userResponseDtos.add(userResponseDto);
+        }
+    }
+
     @Transactional
     @Override
     public void editUser(UserEditDto userEditDto, String email) {

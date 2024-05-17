@@ -44,7 +44,7 @@ public class RecipeController {
     }
 
     @GetMapping("/search")
-    @Operation(summary = "Search recipes by title", description = "Returns search results by title. Parameter title is required")
+    @Operation(summary = "Search recipes by title", description = "Returns search results by recipe title. Parameter title is required")
     @SecurityRequirement(name = "JWT")
     public ResponseEntity<?> findRecipeByTitle(@RequestParam(name = "title", required = true) String title) {
         List<RecipeResponseDto> recipes = recipeService.findAllByTitleStartsWith(title);

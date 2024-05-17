@@ -1,5 +1,6 @@
 package com.neobis.cookscorner.controllers;
 
+import com.neobis.cookscorner.dtos.recipe.RecipeResponseDto;
 import com.neobis.cookscorner.dtos.user.UserEditDto;
 import com.neobis.cookscorner.dtos.user.UserResponseDto;
 import com.neobis.cookscorner.services.UserService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -87,5 +89,12 @@ public class UsersController {
         return ResponseEntity.ok(Map.of("message", "User removed from followings"));
     }
 
+    @GetMapping("/search")
+    @Operation(summary = "Search users by name", description = "Returns search results by user name. Parameter name is required")
+    @SecurityRequirement(name = "JWT")
+    public ResponseEntity<?> findRecipeByTitle(@RequestParam(name = "name", required = true) String name) {
+        List<UserResponseDto> recipes = userService.findAllByNameStartsWith(name);
+        return ResponseEntity.ok(recipes);
+    }
 
 }

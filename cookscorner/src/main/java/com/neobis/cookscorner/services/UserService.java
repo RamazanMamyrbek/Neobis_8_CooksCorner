@@ -4,6 +4,7 @@ import com.neobis.cookscorner.dtos.user.UserEditDto;
 import com.neobis.cookscorner.dtos.user.UserResponseDto;
 import com.neobis.cookscorner.entities.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -20,6 +21,8 @@ public interface UserService {
     void unFollowUser(Long id, String email);
 
     UserResponseDto findUserForProfile(Long id);
+
+    List<UserResponseDto> findAllByNameStartsWith(String name);
 
 
 //    void editUser(MultipartFile photo, String name);
