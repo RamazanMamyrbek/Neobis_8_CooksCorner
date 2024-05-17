@@ -35,7 +35,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    private String photo;
+    private String photoLink;
 
     private boolean enabled;
 
@@ -72,7 +72,7 @@ public class User implements UserDetails {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", photo='" + photo + '\'' +
+                ", photo='" + photoLink + '\'' +
                 ", enabled=" + enabled +
                 ", recipes=" + recipes +
                 ", saves=" + saves +

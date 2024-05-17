@@ -27,7 +27,7 @@ public class Recipe {
 
     private String description;
 
-    private String photo;
+    private String photoLink;
 
     @OneToMany(mappedBy = "recipe")
     @JsonIgnore
@@ -63,7 +63,7 @@ public class Recipe {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", photo='" + photo + '\'' +
+                ", photo='" + photoLink + '\'' +
                 ", ingredients=" + ingredients +
                 ", difficulty=" + difficulty +
                 ", category=" + category +

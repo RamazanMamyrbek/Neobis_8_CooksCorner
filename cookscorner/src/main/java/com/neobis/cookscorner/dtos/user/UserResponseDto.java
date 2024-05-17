@@ -16,7 +16,7 @@ public class UserResponseDto {
     private Long id;
     private String name;
     private String email;
-    private String photo;
+    private String photoLink;
     private String description;
     private List<RecipeResponseDto> recipes;
     private Integer likesCount;

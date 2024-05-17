@@ -14,9 +14,16 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -75,15 +82,63 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Transactional
     @Override
-    public void saveRecipe(RecipeCreateDto recipeCreateDto, String email) {
-        User user = userService.findUserByEmail(email).get();
-        Recipe recipe = modelMapper.map(recipeCreateDto, Recipe.class);
-        recipe.setUser(user);
-        user.getRecipes().add(recipe);
-        recipe.getIngredients().stream().forEach(ingredient -> ingredient.setRecipe(recipe));
-        recipeRepository.save(recipe);
-        ingredientRepository.saveAll(recipe.getIngredients());
+    public void saveRecipe(RecipeCreateDto recipeCreateDto, MultipartFile photo, String email) {
+        try {
+            User user = userService.findUserByEmail(email).orElseThrow(() -> new ApiCommonException("User not found"));
+            Recipe recipe = modelMapper.map(recipeCreateDto, Recipe.class);
+            recipe.setUser(user);
+            //TODO: SAVE RECIPE PHOTO
+            if(photo == null) {
+                throw new ApiCommonException("Photo should not be null");
+            }
+            if(!photo.getContentType().equals("image/png")) {
+                throw new ApiCommonException("Photo should be in png format");
+            }
+            String photoUrl = savePhoto(photo);
+            recipe.setPhotoLink(photoUrl);
+            user.getRecipes().add(recipe);
+            recipe.getIngredients().stream().forEach(ingredient -> ingredient.setRecipe(recipe));
+            recipeRepository.save(recipe);
+            ingredientRepository.saveAll(recipe.getIngredients());
+        } catch (IOException e) {
+            throw new ApiCommonException("Error in photo saving");
+        }
     }
+
+    private String savePhoto(MultipartFile photo) throws IOException {
+        // Генерация пути к файлу и сохранение
+        Path uploadPath = Paths.get("src/main/resources/photos");
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        String filename = UUID.randomUUID().toString() + "_" + photo.getOriginalFilename();
+        Path filePath = uploadPath.resolve(filename);
+        Files.copy(photo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        // Возвращаем путь к файлу
+        return "http://localhost:8080/api/photos/" + filename;
+    }
+
+//    @Transactional
+//    @Override
+//    public Long saveRecipeInfo(RecipeCreateDto recipeCreateDto, String email) {
+//        User user = userService.findUserByEmail(email).orElseThrow(() -> new ApiCommonException("User not found"));
+//        Recipe recipe = modelMapper.map(recipeCreateDto, Recipe.class);
+//        recipe.setUser(user);
+//        user.getRecipes().add(recipe);
+//        recipe.getIngredients().stream().forEach(ingredient -> ingredient.setRecipe(recipe));
+//        recipeRepository.save(recipe);
+//        ingredientRepository.saveAll(recipe.getIngredients());
+//        return recipe.getId();
+//    }
+//
+//    @Transactional
+//    @Override
+//    public void saveRecipePhoto(MultipartFile photo, String email) {
+//        User user = userService.findUserByEmail(email).orElseThrow(() -> new ApiCommonException("User not found"));
+////        Recipe recipe =
+//    }
 
     @Transactional
     @Override
@@ -126,4 +181,6 @@ public class RecipeServiceImpl implements RecipeService {
         User user = userService.findUserByEmail(email).orElseThrow(() -> new ApiCommonException("User not found"));
         userSavesRepository.deleteUserSavesByUserAndRecipe(user, recipe);
     }
+
+
 }

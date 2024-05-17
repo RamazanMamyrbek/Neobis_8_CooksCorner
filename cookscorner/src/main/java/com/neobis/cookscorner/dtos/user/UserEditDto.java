@@ -12,9 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @Builder
 public class UserEditDto {
-    @Schema(example = "testUser")
+    @Schema(example = "testUser", type = "string")
     private String name;
-    @Schema(example = "testUser is only for testing!")
+    @Schema(example = "testUser is only for testing!", type = "string")
     private String description;
     private MultipartFile photo;
+
 }

@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -24,24 +26,51 @@ public class UsersController {
     @GetMapping("/me")
     @Operation(summary = "Current user's info")
     @SecurityRequirement(name = "JWT")
-    public ResponseEntity<?> userInfo(Principal principal) {
+    public ResponseEntity<?> currentUserInfo(Principal principal) {
         UserResponseDto userResponseDto = userService.findUserForProfile(principal.getName());
         return ResponseEntity.ok(userResponseDto);
     }
 
-    //TODO: Edit user
-    @PutMapping(name = "/edit/{userId}", consumes = {"multipart/form-data"})
-    @Operation(summary = "Edit user", description = "Endpoint for edit user's info. Requires userId.")
+    @GetMapping("/{userId}")
+    @Operation(summary = "Specific user's info", description = "Endpoint for user's info with userId")
     @SecurityRequirement(name = "JWT")
-    public ResponseEntity<?> editUser(@RequestParam("name") String name,
-                                      @RequestParam("description") String description,
-                                      @RequestParam("photo") MultipartFile photo,
+    public ResponseEntity<?> userInfo(@PathVariable("userId") Long id) {
+        UserResponseDto userResponseDto = userService.findUserForProfile(id);
+        return ResponseEntity.ok(userResponseDto);
+    }
+
+    //TODO: Edit user
+    @PutMapping(name = "/edit", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "Edit user", description = "Endpoint for edit user's info.")
+    @SecurityRequirement(name = "JWT")
+    public ResponseEntity<?> editUser(@RequestParam(name = "name", required = false) String name,
+                                      @RequestParam(name = "description", required = false) String description,
+                                      @RequestParam(name = "photo",required = false) MultipartFile photo,
                                       Principal principal) {
         UserEditDto userEditDto = UserEditDto.builder().name(name).description(description).photo(photo).build();
-        userService.editUser(userEditDto, principal.getName());
+        userService.editUser(userEditDto,principal.getName());
         return ResponseEntity.ok(Map.of("message", "User edited"));
     }
 
+//    //TODO: Edit user photo
+//    @PutMapping(path = "/edit-photo", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+//    @Operation(summary = "Edit user photo", description = "Endpoint for edit user's photo.")
+//    @SecurityRequirement(name = "JWT")
+//    public ResponseEntity<?> editUserPhoto(@RequestParam(name = "photo",required = false) MultipartFile photo,
+//                                      Principal principal) {
+//        userService.editUser(photo, principal.getName());
+//        return ResponseEntity.ok(Map.of("message", "User photo edited"));
+//    }
+//
+//    //TODO: Edit user
+//    @PutMapping(path = "/edit-info", consumes = {MediaType.APPLICATION_JSON_VALUE})
+//    @Operation(summary = "Edit user", description = "Endpoint for edit user's info.")
+//    @SecurityRequirement(name = "JWT")
+//    public ResponseEntity<?> editUser(@RequestBody UserEditDto userEditDto,
+//                                      Principal principal) {
+//        userService.editUser(userEditDto, principal.getName());
+//        return ResponseEntity.ok(Map.of("message", "User edited"));
+//    }
     @PostMapping("/followings/add/{userId}")
     @Operation(summary = "Add user to followings", description = "Endpoint for follow a user. Requires user id to follow")
     @SecurityRequirement(name = "JWT")
@@ -57,4 +86,6 @@ public class UsersController {
         userService.unFollowUser(id, principal.getName());
         return ResponseEntity.ok(Map.of("message", "User removed from followings"));
     }
+
+
 }

@@ -22,9 +22,6 @@ public class RecipeCreateDto {
     @Schema(example = "You pick up your palette knife and then work that into. Give...")
     private String description;
 
-    @Schema(example = "photo_url")
-    private String photo;
-
     private List<IngredientDto> ingredientsList;
 
     private Difficulty difficulty;
