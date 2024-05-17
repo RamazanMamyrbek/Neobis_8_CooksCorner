@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  postgres_db:
+    image: postgres
+    container_name: postgres_db_digitalocean
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_DB: cookscorner
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  spring_boot_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring_boot_app
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/cookscorner
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SERVER_PORT: 8081
+      JWT_SECRET: d0b125f4b81218d4ae31212773f4ee4a4b769fb556179aca21d3c963edbea8ace94db15699456a1c164162e39c2721bfbb16f74fdb26f10d6e90f22947ce3e737a62d7e81b7c50a0441f56631e4a3e84165af2cda4632c4ba92e5f7cc24310d3359b1695b9b89505376d153d5472c86deb232430a2435d14f5680c178ee4b71382592f26801946c3bbfeb2d600567d37e578088bb4300b942349c40ced05b3d14e87059e67240a27b40f65897d3759278dc33f55fec1ca18c1bb05dcba67f5b412a5d96fd68925f43c9749393f03f3dd4c9225d9dc88a5e0d28ecb89a5cbcfc707ec2906f35b8f0825f659954051ac5b1c03b8afd1e09a977d55c4d18b7c7b96
+      JWT_LIFETIME: 30m
+    depends_on:
+      - postgres_db
