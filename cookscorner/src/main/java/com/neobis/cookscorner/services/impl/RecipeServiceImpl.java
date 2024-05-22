@@ -117,7 +117,7 @@ public class RecipeServiceImpl implements RecipeService {
         Files.copy(photo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         // Возвращаем путь к файлу
-        return "http://localhost:8080/api/photos/" + filename;
+        return "http://165.227.147.154:8081/api/photos/" + filename;
     }
 
 //    @Transactional

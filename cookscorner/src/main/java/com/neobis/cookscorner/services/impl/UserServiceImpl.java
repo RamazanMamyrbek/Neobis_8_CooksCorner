@@ -136,7 +136,7 @@ public class UserServiceImpl implements UserService {
         Files.copy(photo.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         // Возвращаем путь к файлу
-        return "http://localhost:8080/api/photos/" + filename;
+        return "http://165.227.147.154:8081/api/photos/" + filename;
     }
 
 
@@ -192,24 +192,30 @@ public class UserServiceImpl implements UserService {
 
     private List<RecipeResponseDto> createRecipeResponseDtoListFromRecipes(List<Recipe> recipes) {
         List<RecipeResponseDto> recipeResponseDtos = new ArrayList<>();
-        for(Recipe recipe: recipes) {
-            RecipeResponseDto recipeResponseDto = modelMapper.map(recipe, RecipeResponseDto.class);
-            recipeResponseDto.setLikesCount(recipe.getLikes().size());
-            recipeResponseDto.setSavesCount(recipe.getSaves().size());
-            recipeResponseDtos.add(recipeResponseDto);
+        if (recipes != null) {
+            for(Recipe recipe: recipes) {
+                RecipeResponseDto recipeResponseDto = modelMapper.map(recipe, RecipeResponseDto.class);
+                recipeResponseDto.setLikesCount(recipe.getLikes().size());
+                recipeResponseDto.setSavesCount(recipe.getSaves().size());
+                recipeResponseDtos.add(recipeResponseDto);
+            }
         }
+
         return recipeResponseDtos;
     }
 
     private List<RecipeResponseDto> createRecipeResponseDtoListFromUserSaves(List<UserSaves> saves) {
         List<RecipeResponseDto> recipeResponseDtos = new ArrayList<>();
-        for(UserSaves userSave: saves) {
-            Recipe recipe = userSave.getRecipe();
-            RecipeResponseDto recipeResponseDto = modelMapper.map(recipe, RecipeResponseDto.class);
-            recipeResponseDto.setLikesCount(recipe.getLikes().size());
-            recipeResponseDto.setSavesCount(recipe.getSaves().size());
-            recipeResponseDtos.add(recipeResponseDto);
+        if (saves != null) {
+            for(UserSaves userSave: saves) {
+                Recipe recipe = userSave.getRecipe();
+                RecipeResponseDto recipeResponseDto = modelMapper.map(recipe, RecipeResponseDto.class);
+                recipeResponseDto.setLikesCount(recipe.getLikes().size());
+                recipeResponseDto.setSavesCount(recipe.getSaves().size());
+                recipeResponseDtos.add(recipeResponseDto);
+            }
         }
+
         return recipeResponseDtos;
     }
 

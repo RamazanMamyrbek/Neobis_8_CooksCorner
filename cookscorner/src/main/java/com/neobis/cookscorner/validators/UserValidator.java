@@ -19,7 +19,7 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-        if(userService.findUserByEmail(((User) target).getEmail()).isPresent()) {
+        if(userService.findUserByEmail(user.getEmail()).isPresent()) {
             errors.rejectValue("email", "", "This email is already taken");
         }
     }

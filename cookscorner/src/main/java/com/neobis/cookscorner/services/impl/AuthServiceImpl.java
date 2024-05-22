@@ -8,6 +8,7 @@ import com.neobis.cookscorner.services.AuthService;
 import com.neobis.cookscorner.services.JwtService;
 import com.neobis.cookscorner.services.UserService;
 import com.neobis.cookscorner.validators.UserValidator;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
