@@ -11,6 +11,7 @@ import org.springframework.validation.Validator;
 @RequiredArgsConstructor
 public class UserValidator implements Validator {
     private final UserService userService;
+
     @Override
     public boolean supports(Class<?> clazz) {
         return clazz.equals(User.class);
@@ -19,7 +20,7 @@ public class UserValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-        if(userService.findUserByEmail(user.getEmail()).isPresent()) {
+        if (userService.findUserByEmail(user.getEmail()).isPresent()) {
             errors.rejectValue("email", "", "This email is already taken");
         }
     }

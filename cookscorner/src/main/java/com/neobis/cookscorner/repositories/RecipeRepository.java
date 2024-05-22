@@ -4,7 +4,6 @@ import com.neobis.cookscorner.entities.Category;
 import com.neobis.cookscorner.entities.Recipe;
 import com.neobis.cookscorner.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,6 +12,8 @@ import java.util.List;
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     List<Recipe> findAllByCategory(Category category);
+
     List<Recipe> findAllByTitleStartsWithIgnoreCase(String title);
+
     List<Recipe> findAllByUser(User user);
 }

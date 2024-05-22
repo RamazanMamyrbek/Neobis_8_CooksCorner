@@ -1,5 +1,5 @@
 package com.neobis.cookscorner.exceptions;
 
 
-public class JwtVerificationException extends RuntimeException{
+public class JwtVerificationException extends RuntimeException {
 }

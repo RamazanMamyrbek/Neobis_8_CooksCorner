@@ -7,6 +7,7 @@ import java.security.Key;
 
 public interface JwtService {
     String generateToken(UserDetails userDetails);
+
     Claims extractClaims(String jwtToken);
 
     String extractUsername(String jwtToken);

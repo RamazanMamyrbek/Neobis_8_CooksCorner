@@ -35,16 +35,17 @@ public class RecipeServiceImpl implements RecipeService {
     private final IngredientRepository ingredientRepository;
     private final UserLikesRepository userLikesRepository;
     private final UserSavesRepository userSavesRepository;
+
     @Override
     public List<RecipeResponseDto> findAllByCategory(String category) {
         List<RecipeResponseDto> recipeResponseDtos = new ArrayList<>();
-        if(category.toUpperCase().equals(Category.BREAKFAST.toString())) {
+        if (category.toUpperCase().equals(Category.BREAKFAST.toString())) {
             List<Recipe> recipes = recipeRepository.findAllByCategory(Category.BREAKFAST);
             fillRecipeResponseDtos(recipeResponseDtos, recipes);
-        } else if(category.toUpperCase().equals(Category.LUNCH.toString())) {
+        } else if (category.toUpperCase().equals(Category.LUNCH.toString())) {
             List<Recipe> recipes = recipeRepository.findAllByCategory(Category.LUNCH);
             fillRecipeResponseDtos(recipeResponseDtos, recipes);
-        } else if(category.toUpperCase().equals(Category.DINNER.toString())) {
+        } else if (category.toUpperCase().equals(Category.DINNER.toString())) {
             List<Recipe> recipes = recipeRepository.findAllByCategory(Category.DINNER);
             fillRecipeResponseDtos(recipeResponseDtos, recipes);
         }
@@ -53,7 +54,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private void fillRecipeResponseDtos(List<RecipeResponseDto> recipeResponseDtos, List<Recipe> recipes) {
-        for(Recipe recipe: recipes) {
+        for (Recipe recipe : recipes) {
             int likeCount = 0;
             RecipeResponseDto recipeResponseDto = modelMapper.map(recipe, RecipeResponseDto.class);
             recipeResponseDto.setLikesCount(recipe.getLikes().size());
@@ -87,11 +88,10 @@ public class RecipeServiceImpl implements RecipeService {
             User user = userService.findUserByEmail(email).orElseThrow(() -> new ApiCommonException("User not found"));
             Recipe recipe = modelMapper.map(recipeCreateDto, Recipe.class);
             recipe.setUser(user);
-            //TODO: SAVE RECIPE PHOTO
-            if(photo == null) {
+            if (photo == null) {
                 throw new ApiCommonException("Photo should not be null");
             }
-            if(!photo.getContentType().equals("image/png")) {
+            if (!photo.getContentType().equals("image/png")) {
                 throw new ApiCommonException("Photo should be in png format");
             }
             String photoUrl = savePhoto(photo);
@@ -106,7 +106,6 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     private String savePhoto(MultipartFile photo) throws IOException {
-        // Генерация пути к файлу и сохранение
         Path uploadPath = Paths.get("src/main/resources/photos");
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
@@ -119,26 +118,6 @@ public class RecipeServiceImpl implements RecipeService {
         // Возвращаем путь к файлу
         return "http://165.227.147.154:8081/api/photos/" + filename;
     }
-
-//    @Transactional
-//    @Override
-//    public Long saveRecipeInfo(RecipeCreateDto recipeCreateDto, String email) {
-//        User user = userService.findUserByEmail(email).orElseThrow(() -> new ApiCommonException("User not found"));
-//        Recipe recipe = modelMapper.map(recipeCreateDto, Recipe.class);
-//        recipe.setUser(user);
-//        user.getRecipes().add(recipe);
-//        recipe.getIngredients().stream().forEach(ingredient -> ingredient.setRecipe(recipe));
-//        recipeRepository.save(recipe);
-//        ingredientRepository.saveAll(recipe.getIngredients());
-//        return recipe.getId();
-//    }
-//
-//    @Transactional
-//    @Override
-//    public void saveRecipePhoto(MultipartFile photo, String email) {
-//        User user = userService.findUserByEmail(email).orElseThrow(() -> new ApiCommonException("User not found"));
-////        Recipe recipe =
-//    }
 
     @Transactional
     @Override

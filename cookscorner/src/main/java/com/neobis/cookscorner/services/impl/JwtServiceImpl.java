@@ -1,6 +1,5 @@
 package com.neobis.cookscorner.services.impl;
 
-import com.neobis.cookscorner.exceptions.JwtVerificationException;
 import com.neobis.cookscorner.services.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 
@@ -23,6 +21,7 @@ import java.util.Map;
 public class JwtServiceImpl implements JwtService {
     @Value("${jwt.secret}")
     private String SECRET_KEY;
+
     @Override
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()

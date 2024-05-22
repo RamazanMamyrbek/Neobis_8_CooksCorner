@@ -14,8 +14,6 @@ public interface RecipeService {
     List<RecipeResponseDto> findAllByTitleStartsWith(String title);
 
     void saveRecipe(RecipeCreateDto recipeCreateDto, MultipartFile photo, String email);
-//    Long saveRecipeInfo(RecipeCreateDto recipeCreateDto, String email);
-//    void saveRecipePhoto(MultipartFile photo, String email);
 
     void likeRecipe(Long recipeId, String name);
 
@@ -24,7 +22,6 @@ public interface RecipeService {
     void addRecipeToSaves(Long recipeId, String name);
 
     void removeRecipeFromSaves(Long recipeId, String name);
-
 
 
 }

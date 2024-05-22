@@ -4,9 +4,6 @@ import com.neobis.cookscorner.dtos.recipe.RecipeCreateDto;
 import com.neobis.cookscorner.dtos.recipe.RecipeResponseDto;
 import com.neobis.cookscorner.services.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -51,29 +48,13 @@ public class RecipeController {
         return ResponseEntity.ok(recipes);
     }
 
-//    @PostMapping("/create-info")
-//    @Operation(summary = "Create recipe", description = "Creates a recipe with json info.")
-//    @SecurityRequirement(name = "JWT")
-//    public ResponseEntity<?> createRecipe(@RequestBody RecipeCreateDto recipeCreateDto, Principal principal) {
-//        Long id = recipeService.saveRecipeInfo(recipeCreateDto, principal.getName());
-//        return ResponseEntity.ok(Map.of("message", "Recipe is created successfully.", "recipeId", id));
-//    }
-//
-//    @PostMapping(value = "/create-photo", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-//    @Operation(summary = "Create recipe photo", description = "Adds a photo to recipe.")
-//    @SecurityRequirement(name = "JWT")
-//    public ResponseEntity<?> createRecipe(@RequestParam MultipartFile photo, Principal principal) {
-//        recipeService.saveRecipePhoto(photo, principal.getName());
-//        return ResponseEntity.ok(Map.of("message", "Recipe is created successfully."));
-//    }
-
     @PostMapping(value = "/create", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "Create recipe photo", description = "Adds a photo to recipe.")
     @SecurityRequirement(name = "JWT")
     public ResponseEntity<?> createRecipe(@RequestPart RecipeCreateDto recipeCreateDto,
                                           @RequestPart MultipartFile photo,
                                           Principal principal) {
-        recipeService.saveRecipe(recipeCreateDto,photo, principal.getName());
+        recipeService.saveRecipe(recipeCreateDto, photo, principal.getName());
         return ResponseEntity.ok(Map.of("message", "Recipe is created successfully."));
     }
 

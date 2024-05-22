@@ -1,6 +1,5 @@
 package com.neobis.cookscorner.controllers;
 
-import com.neobis.cookscorner.dtos.recipe.RecipeResponseDto;
 import com.neobis.cookscorner.dtos.user.UserEditDto;
 import com.neobis.cookscorner.dtos.user.UserResponseDto;
 import com.neobis.cookscorner.services.UserService;
@@ -8,10 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +22,7 @@ import java.util.Map;
 @Tag(name = "Users", description = "Controller for users")
 public class UsersController {
     private final UserService userService;
+
     @GetMapping("/me")
     @Operation(summary = "Current user's info")
     @SecurityRequirement(name = "JWT")
@@ -47,32 +45,13 @@ public class UsersController {
     @SecurityRequirement(name = "JWT")
     public ResponseEntity<?> editUser(@RequestParam(name = "name", required = false) String name,
                                       @RequestParam(name = "description", required = false) String description,
-                                      @RequestParam(name = "photo",required = false) MultipartFile photo,
+                                      @RequestParam(name = "photo", required = false) MultipartFile photo,
                                       Principal principal) {
         UserEditDto userEditDto = UserEditDto.builder().name(name).description(description).photo(photo).build();
-        userService.editUser(userEditDto,principal.getName());
+        userService.editUser(userEditDto, principal.getName());
         return ResponseEntity.ok(Map.of("message", "User edited"));
     }
 
-//    //TODO: Edit user photo
-//    @PutMapping(path = "/edit-photo", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-//    @Operation(summary = "Edit user photo", description = "Endpoint for edit user's photo.")
-//    @SecurityRequirement(name = "JWT")
-//    public ResponseEntity<?> editUserPhoto(@RequestParam(name = "photo",required = false) MultipartFile photo,
-//                                      Principal principal) {
-//        userService.editUser(photo, principal.getName());
-//        return ResponseEntity.ok(Map.of("message", "User photo edited"));
-//    }
-//
-//    //TODO: Edit user
-//    @PutMapping(path = "/edit-info", consumes = {MediaType.APPLICATION_JSON_VALUE})
-//    @Operation(summary = "Edit user", description = "Endpoint for edit user's info.")
-//    @SecurityRequirement(name = "JWT")
-//    public ResponseEntity<?> editUser(@RequestBody UserEditDto userEditDto,
-//                                      Principal principal) {
-//        userService.editUser(userEditDto, principal.getName());
-//        return ResponseEntity.ok(Map.of("message", "User edited"));
-//    }
     @PostMapping("/followings/add/{userId}")
     @Operation(summary = "Add user to followings", description = "Endpoint for follow a user. Requires user id to follow")
     @SecurityRequirement(name = "JWT")

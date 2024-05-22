@@ -8,17 +8,14 @@ import com.neobis.cookscorner.services.AuthService;
 import com.neobis.cookscorner.services.JwtService;
 import com.neobis.cookscorner.services.UserService;
 import com.neobis.cookscorner.validators.UserValidator;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,14 +39,14 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     @Override
     public String registerUser(UserRegisterDto userRegisterDto, BindingResult bindingResult) {
-        if(!userRegisterDto.getPassword().equals(userRegisterDto.getConfirmPassword()))
+        if (!userRegisterDto.getPassword().equals(userRegisterDto.getConfirmPassword()))
             throw new ApiCommonException("Passwords doesn't match");
         User user = modelMapper.map(userRegisterDto, User.class);
         userValidator.validate(user, bindingResult);
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             StringBuilder message = new StringBuilder();
-            for(FieldError error: fieldErrors) {
+            for (FieldError error : fieldErrors) {
                 message.append(error.getDefaultMessage()).append(", ");
             }
             throw new ApiCommonException(message.toString());
@@ -64,7 +61,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String loginUser(UserLoginDto userLoginDto) {
         String jwtToken;
-        try{
+        try {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPassword());
             authenticationManager.authenticate(authenticationToken);
             UserDetails userDetails = userDetailsService.loadUserByUsername(userLoginDto.getEmail());

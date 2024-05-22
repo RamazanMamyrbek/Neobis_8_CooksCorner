@@ -1,6 +1,5 @@
 package com.neobis.cookscorner.dtos.recipe;
 
-import com.neobis.cookscorner.dtos.recipe.IngredientDto;
 import com.neobis.cookscorner.entities.Category;
 import com.neobis.cookscorner.entities.Difficulty;
 import io.swagger.v3.oas.annotations.media.Schema;

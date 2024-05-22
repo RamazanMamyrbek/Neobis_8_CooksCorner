@@ -1,7 +1,7 @@
 package com.neobis.cookscorner.dtos.recipe;
 
-import com.neobis.cookscorner.dtos.recipe.IngredientResponseDto;
-import com.neobis.cookscorner.entities.*;
+import com.neobis.cookscorner.entities.Category;
+import com.neobis.cookscorner.entities.Difficulty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

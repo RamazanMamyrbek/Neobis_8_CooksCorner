@@ -1,7 +1,15 @@
-# Neobis_8_CooksCorner
+# Neobis_9_CooksCorner
 Neobis project 9 Cooks Corner
+
+# О проекте
+
+CooksCorner - это инновационное предложение, спроектированное для удобного и вдохновляющего опыта в мире кулинарии. Предлагая разнообразные категории, включая обширный список рецептов, CooksCorner создает удобную платформу для кулинарных энтузиастов. Погружайтесь в атмосферу кулинарных шедевров с захватывающими фотографиями, изучайте подробные описания рецептов, а также управляйте своим кулинарным опытом, сохраняя, лайкая и даже создавая собственные блюда. 
+CooksCorner -  путь к беспроблемным и вдохновляющим кулинарным приключениям.
+
 Api Backend: http://165.227.147.154:8081/swagger-ui/index.html Инструкция по запуску api бекенда:
 
-Установить docker, docker-compose
-Перейти в папку Neobis_9_CooksCorner/cookscorner/run-app
-docker-compose up -d
+ - Установить docker, docker-compose
+
+ - Перейти в папку Neobis_9_CooksCorner/cookscorner/run-app
+
+ - docker-compose up -d

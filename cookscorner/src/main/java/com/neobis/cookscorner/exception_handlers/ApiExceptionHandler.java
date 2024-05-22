@@ -17,6 +17,4 @@ public class ApiExceptionHandler {
         ApiErrorResponse errorResponse = new ApiErrorResponse(ex.getMessage(), System.currentTimeMillis());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-
-
 }

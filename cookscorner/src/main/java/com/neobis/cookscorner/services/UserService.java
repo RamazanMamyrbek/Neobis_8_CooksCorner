@@ -24,8 +24,4 @@ public interface UserService {
 
     List<UserResponseDto> findAllByNameStartsWith(String name);
 
-
-//    void editUser(MultipartFile photo, String name);
-//
-//    void editUser(UserEditDto userEditDto, String name);
 }

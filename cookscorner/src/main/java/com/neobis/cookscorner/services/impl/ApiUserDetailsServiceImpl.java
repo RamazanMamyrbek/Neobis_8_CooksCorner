@@ -13,11 +13,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ApiUserDetailsServiceImpl implements ApiUserDetailsService {
     public final UserServiceImpl userService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userService.findUserByEmail(username);
-        if(!user.isPresent()) {
-            throw new UsernameNotFoundException(String.format("Username with email %s not found" , username));
+        if (!user.isPresent()) {
+            throw new UsernameNotFoundException(String.format("Username with email %s not found", username));
         }
         return user.get();
     }

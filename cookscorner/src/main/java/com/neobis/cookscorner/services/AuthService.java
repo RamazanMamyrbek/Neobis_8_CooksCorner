@@ -6,5 +6,6 @@ import org.springframework.validation.BindingResult;
 
 public interface AuthService {
     String registerUser(UserRegisterDto userRegisterDto, BindingResult bindingResult);
+
     String loginUser(UserLoginDto userLoginDto);
 }

@@ -53,8 +53,8 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(name = "followers",
-        joinColumns = @JoinColumn(name = "user_id"),
-        inverseJoinColumns = @JoinColumn(name = "follower_id"), uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "follower_id"})})
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "follower_id"), uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "follower_id"})})
     @JsonIgnore
     private List<User> followers;
 
