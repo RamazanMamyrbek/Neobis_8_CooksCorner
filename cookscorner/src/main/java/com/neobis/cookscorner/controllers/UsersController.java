@@ -40,7 +40,7 @@ public class UsersController {
     }
 
     //TODO: Edit user
-    @PutMapping(name = "/edit", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(name = "/edit", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "Edit user", description = "Endpoint for edit user's info.")
     @SecurityRequirement(name = "JWT")
     public ResponseEntity<?> editUser(@RequestParam(name = "name", required = false) String name,
